@@ -1,4 +1,4 @@
-AndroidCIBuildNotification
+ArduinoCIBuildNotification
 ==========================
 
-Using an Android UNO to show the build status with some software glue over serial communication.
+Using an Arduino UNO to show the build status with some software glue over serial communication.
