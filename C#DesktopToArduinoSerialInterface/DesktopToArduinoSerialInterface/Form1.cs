@@ -18,6 +18,7 @@ namespace DesktopToArduinoSerialInterface
 		{
 			InitializeComponent();
 			serialPortWrapper = new SerialPortWrapper();
+			this.Text = serialPortWrapper.GetPorts();
 		}
 
 		
@@ -36,8 +37,15 @@ namespace DesktopToArduinoSerialInterface
 		public SerialPort SerialPort;
 		public SerialPortWrapper()
 		{
+		
 			SerialPort = new SerialPort() { PortName = "COM4", BaudRate = 9600 };
 			
+		}
+
+		public string GetPorts()
+		{
+			return SerialPort.GetPortNames()[0];
+
 		}
 
 		public void Send(string message)
