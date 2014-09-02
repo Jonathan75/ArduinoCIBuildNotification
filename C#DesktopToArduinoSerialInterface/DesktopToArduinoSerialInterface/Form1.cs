@@ -22,10 +22,13 @@ namespace DesktopToArduinoSerialInterface
 			lstPorts.DataSource = serialPortWrapper.GetPorts();
 			//lstPorts.DataSource;
 
-			this.Text = serialPortWrapper.GetPorts();
+			//this.Text = serialPortWrapper.GetPorts();
 		}
 
-		
+		private void lstPorts_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			serialPortWrapper.SerialPort.PortName = lstPorts.SelectedValue.ToString();
+		}
 
 		private void button1_Click(object sender, EventArgs e)
 		{
@@ -43,12 +46,12 @@ namespace DesktopToArduinoSerialInterface
 		{
 		
 			SerialPort = new SerialPort() { PortName = "COM4", BaudRate = 9600 };
-			
+			//SerialPort = new SerialPort() {BaudRate = 9600 };
 		}
 
-		public string GetPorts()
+		public string[] GetPorts()
 		{
-			return SerialPort.GetPortNames()[0];
+			return SerialPort.GetPortNames();
 
 		}
 

@@ -59,6 +59,7 @@
 			this.lstPorts.Name = "lstPorts";
 			this.lstPorts.Size = new System.Drawing.Size(121, 21);
 			this.lstPorts.TabIndex = 2;
+			this.lstPorts.SelectedIndexChanged += new System.EventHandler(this.lstPorts_SelectedIndexChanged);
 			// 
 			// Form1
 			// 
