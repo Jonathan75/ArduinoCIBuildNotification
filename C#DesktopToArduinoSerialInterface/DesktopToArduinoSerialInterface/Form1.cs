@@ -18,6 +18,10 @@ namespace DesktopToArduinoSerialInterface
 		{
 			InitializeComponent();
 			serialPortWrapper = new SerialPortWrapper();
+
+			lstPorts.DataSource = serialPortWrapper.GetPorts();
+			//lstPorts.DataSource;
+
 			this.Text = serialPortWrapper.GetPorts();
 		}
 
