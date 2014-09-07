@@ -1,11 +1,12 @@
 const int redLed = 11;
 const int yellowLed = 12;
-const int greenLed =13;
+const int greenLed = 13;
 
 int brightness = 0;    // how bright the LED is
 int fadeAmount = 1;    // how many points to fade the LED by
-int brightnessMax = 50;
-int delayValue = 30;
+int brightnessMax = 255;
+char lightCommand = ' ';
+int lightValue = 30;
 
 void setup() {                
   Serial.begin(9600);
@@ -15,17 +16,23 @@ void setup() {
   
   digitalWrite(yellowLed, HIGH);
   digitalWrite(greenLed, HIGH);
-  
-  
+  digitalWrite(redLed, HIGH);
   delay(5000); 
+//  digitalWrite(yellowLed, LOW);
+//  digitalWrite(greenLed, LOW);
+//  digitalWrite(redLed, LOW);
 }
 
 
 void loop() {
+  readCommand();            
   
   blinkLight();
-  readCommand();            
+  
 }
+
+
+
 
 void blinkLight()
 {
@@ -34,14 +41,14 @@ void blinkLight()
   if (brightness == 0 || brightness == brightnessMax) {
     fadeAmount = -fadeAmount ; 
   }   
-  delay(delayValue);  
+  delay(lightValue);  
 }
 
 void readCommand()
 {
   if(Serial.available())
   {
-    delayValue = Serial.parseInt();  
-    Serial.println(delayValue);
+    lightValue = Serial.parseInt();  
+    Serial.println(lightValue);
   }
 }
