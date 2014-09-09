@@ -18,20 +18,30 @@ void setup() {
   digitalWrite(greenLed, HIGH);
   digitalWrite(redLed, HIGH);
   delay(5000); 
-//  digitalWrite(yellowLed, LOW);
-//  digitalWrite(greenLed, LOW);
-//  digitalWrite(redLed, LOW);
+  digitalWrite(yellowLed, LOW);
+  digitalWrite(greenLed, LOW);
+  digitalWrite(redLed, LOW);
 }
 
 
 void loop() {
+  cycleLights();  
   readCommand();            
-  
-  blinkLight();
-  
+  //blinkLight();
 }
 
-
+void cycleLights()
+{
+  digitalWrite(yellowLed, HIGH);
+  delay(lightValue); 
+  digitalWrite(yellowLed, LOW);
+  digitalWrite(greenLed, HIGH);
+  delay(lightValue);
+  digitalWrite(greenLed, LOW);
+  digitalWrite(redLed, HIGH);
+  delay(lightValue); 
+  digitalWrite(redLed, LOW);
+}
 
 
 void blinkLight()
