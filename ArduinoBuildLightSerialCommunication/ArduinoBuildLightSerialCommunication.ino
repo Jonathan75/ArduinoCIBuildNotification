@@ -6,7 +6,7 @@ int brightness = 0;    // how bright the LED is
 int fadeAmount = 1;    // how many points to fade the LED by
 int brightnessMax = 255;
 char lightCommand = ' ';
-int lightValue = 30;
+int lightValue = 200;
 
 void setup() {                
   Serial.begin(9600);
@@ -32,12 +32,14 @@ void loop() {
 
 void cycleLights()
 {
-  digitalWrite(yellowLed, HIGH);
-  delay(lightValue); 
-  digitalWrite(yellowLed, LOW);
   digitalWrite(greenLed, HIGH);
-  delay(lightValue);
+  delay(lightValue); 
   digitalWrite(greenLed, LOW);
+  
+  digitalWrite(yellowLed, HIGH);
+  delay(lightValue);
+  digitalWrite(yellowLed, LOW);
+  
   digitalWrite(redLed, HIGH);
   delay(lightValue); 
   digitalWrite(redLed, LOW);
