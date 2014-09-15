@@ -1,17 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO.Ports;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-//using DesktopToArduinoSerialInterface.TfsBuildWebService;
 using Microsoft.TeamFoundation.Build.Client;
 using Microsoft.TeamFoundation.Client;
-//using Microsoft.TeamFoundation.Framework.Common;
-//using Microsoft.TeamFoundation.VersionControl.Client;
 
 namespace DesktopToArduinoSerialInterface
 {
@@ -32,7 +23,6 @@ namespace DesktopToArduinoSerialInterface
 			lstBuildDefinitions.DataSource = tfsWrapper.GetAllBuildDefinitionsFromTheTeamProject();
 			lstBuildDefinitions.DisplayMember = "Name";
 			lstBuildDefinitions.ValueMember  = "Uri";
-			//lstBuildDefinitions.SelectedIndex = 0;
 		}
 
 		private void lstPorts_SelectedIndexChanged(object sender, EventArgs e)
@@ -82,6 +72,10 @@ namespace DesktopToArduinoSerialInterface
 	
 	public class TfsWrapper
 	{
+		/// http://geekswithblogs.net/TarunArora/archive/2011/06/18/tfs-2010-sdk-connecting-to-tfs-2010-programmaticallyndashpart-1.aspx
+		/// http://visualstudiogallery.msdn.microsoft.com/25622469-19d8-4959-8e5c-4025d1c9183d?SRC=VSIDE
+		/// https://www.microsoft.com/en-us/download/details.aspx?id=21835
+
 		TfsTeamProjectCollection _tfs;
 		string _selectedTeamProject;
 		IBuildServer _bs;
