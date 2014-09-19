@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO.Ports;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 using Microsoft.TeamFoundation.Build.Client;
 using Microsoft.TeamFoundation.Client;
 
@@ -32,7 +33,6 @@ namespace DesktopToArduinoSerialInterface
 
 		private void button1_Click(object sender, EventArgs e)
 		{
-
 			updateLightDelay();
 		}
 
@@ -63,9 +63,8 @@ namespace DesktopToArduinoSerialInterface
 				return;
 			
 			lstBuilds.DataSource= tfsWrapper.Builds(buildDefinition.Name);
-			lstBuilds.DisplayMember = "BuildNumber";
+			lstBuilds.DisplayMember = "Status";
 			lstBuilds.ValueMember = "Uri";
-			//lstBuilds.SelectedIndex = 0;
 		}
 
 	}
