@@ -2,6 +2,8 @@
 using System.IO.Ports;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
+using Arduino4Net.Components.Leds;
+using Arduino4Net.Models;
 using Microsoft.TeamFoundation.Build.Client;
 using Microsoft.TeamFoundation.Client;
 
@@ -9,8 +11,9 @@ namespace DesktopToArduinoSerialInterface
 {
 	public partial class Form1 : Form
 	{
-		SerialPortWrapper serialPortWrapper;
-		TfsWrapper tfsWrapper;
+		readonly SerialPortWrapper serialPortWrapper;
+		readonly TfsWrapper tfsWrapper;
+		ArduinoWrapper arduinoWrapper;
 		public Form1()
 		{
 			InitializeComponent();
@@ -28,7 +31,8 @@ namespace DesktopToArduinoSerialInterface
 
 		private void lstPorts_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			serialPortWrapper.SerialPort.PortName = lstPorts.SelectedValue.ToString();
+			//serialPortWrapper.SerialPort.PortName = lstPorts.SelectedValue.ToString();
+			arduinoWrapper = new ArduinoWrapper(lstPorts.SelectedValue.ToString());
 		}
 
 		private void button1_Click(object sender, EventArgs e)
@@ -47,7 +51,8 @@ namespace DesktopToArduinoSerialInterface
 
 		void updateLightDelay()
 		{
-			serialPortWrapper.Send(txtLightDelay.Text);
+			arduinoWrapper.Blink();
+			//serialPortWrapper.Send(txtLightDelay.Text);
 		}
 
 		private void lstProject_SelectedIndexChanged(object sender, EventArgs e)
@@ -76,8 +81,9 @@ namespace DesktopToArduinoSerialInterface
 		/// https://www.microsoft.com/en-us/download/details.aspx?id=21835
 
 		TfsTeamProjectCollection _tfs;
-		string _selectedTeamProject;
-		IBuildServer _bs;
+
+		readonly string _selectedTeamProject;
+		readonly IBuildServer _bs;
 		
 		public TfsWrapper()
 		{
@@ -106,15 +112,74 @@ namespace DesktopToArduinoSerialInterface
 		
 	}
 
+
+	public class ArduinoWrapper
+	{
+		Arduino board;
+		readonly Led led13;
+		readonly Led led12;
+		readonly Led led11;
+
+
+		public ArduinoWrapper(string Port)
+		{
+			board = new Arduino(Port);
+			led13 = new Led(board,13);
+			led12 = new Led(board,12);
+			led11 = new Led(board,11);
+		}
+
+		public void GreenLight(bool on)
+		{
+			lightOnOff(led13, on);
+
+
+
+			
+			led11.On();
+		}
+
+		public void YellowLight(bool on)
+		{
+			lightOnOff(led12,on);
+		}
+
+		public void RedLight(StrobeSpeed speed)
+		{
+			led13.StrobeOn();
+
+		}
+
+		void lightOnOff(Led led, bool on)
+		{
+			if (on)
+			{
+				led13.On();
+				return;
+			}
+
+			led13.Off();
+		}
+
+		public enum StrobeSpeed
+		{
+			Off = 0,
+			On = 1,
+			Slow = 1000 * 10,
+			Medium = 1000,
+			Fast = 500
+		}
+	}
+
 	public class SerialPortWrapper
 	{
-		public SerialPort SerialPort;
-		public SerialPortWrapper()
-		{
+		//public SerialPort SerialPort;
+		//public SerialPortWrapper()
+		//{
 		
-			SerialPort = new SerialPort() { PortName = "COM4", BaudRate = 9600 };
-			//SerialPort = new SerialPort() {BaudRate = 9600 };
-		}
+		//	SerialPort = new SerialPort() { PortName = "COM4", BaudRate = 9600 };
+		//	//SerialPort = new SerialPort() {BaudRate = 9600 };
+		//}
 
 		public string[] GetPorts()
 		{
@@ -122,24 +187,24 @@ namespace DesktopToArduinoSerialInterface
 
 		}
 
-		public void Send(string message)
-		{
-			if (SerialPort.IsOpen) return;
+		//public void Send(string message)
+		//{
+		//	if (SerialPort.IsOpen) return;
 
-			try
-			{
-				SerialPort.Open();
-				SerialPort.Write(message);
+		//	try
+		//	{
+		//		SerialPort.Open();
+		//		SerialPort.Write(message);
 
-			}
-			catch (Exception ex)
-			{
-				throw;
-			}
-			finally
-			{
-				SerialPort.Close();
-			}
-		}
+		//	}
+		//	catch (Exception ex)
+		//	{
+		//		throw;
+		//	}
+		//	finally
+		//	{
+		//		SerialPort.Close();
+		//	}
+		//}
 	}
 }
